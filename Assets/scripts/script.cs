@@ -9,11 +9,12 @@ public class script : MonoBehaviour
     public float horizontal;
     private bool flip = true;
     public Animator animator;
-    public int jumpForce = 2;
+    public int jumpForce = 6;
     public bool onGroud;
     public LayerMask Ground;
     public Transform GroundCheck;
     private float GroundCheckRadius;
+    public float vertical;
 
     void Start()
     {
@@ -26,9 +27,9 @@ public class script : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal") * speed;
+        vertical = Input.GetAxis("Vertical");
         rb.velocity = new Vector2(horizontal, rb.velocity.y);
         animator.SetFloat("moveX",Mathf.Abs (horizontal));
-        animator.SetFloat("jump 0", Mathf.Abs(jumpForce));
         /*if(horizontal>0 && !flip)
         {
             Flip();
@@ -62,6 +63,7 @@ public class script : MonoBehaviour
 
     void CheckinngGround()
     {
-        onGroud = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, Ground); 
+        onGroud = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, Ground);
+        animator.SetFloat("moveY", Mathf.Abs(rb.velocity.y));
     }
 }
