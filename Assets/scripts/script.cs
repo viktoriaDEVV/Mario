@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class script : MonoBehaviour
 {
-    public float speed = 8f;
+    public float speed = 5f;
     private Rigidbody2D rb;
     public float horizontal;
     private bool flip = true;
@@ -15,12 +15,15 @@ public class script : MonoBehaviour
     public Transform GroundCheck;
     private float GroundCheckRadius;
     public float vertical;
+    private Vector3 respawnPoint;
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         GroundCheckRadius = GroundCheck.GetComponent<CircleCollider2D>().radius;
+        respawnPoint = transform.position;
     }
 
     // Update is called once per frame
@@ -44,6 +47,8 @@ public class script : MonoBehaviour
         }
         Jump();
         CheckinngGround();
+
+        
     }
     /*void Flip()
     {
@@ -65,5 +70,16 @@ public class script : MonoBehaviour
     {
         onGroud = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, Ground);
         animator.SetFloat("moveY", Mathf.Abs(rb.velocity.y));
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "DeadZone")
+        {
+            transform.position = respawnPoint;
+        }else if(collision.tag == "checkpoint")
+        {
+            respawnPoint = transform.position;
+        }
     }
 }
