@@ -3266,10 +3266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60da7ed64c49aa143b19cac8bd311145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 4
   horizontal: 0
   animator: {fileID: 1614342158}
-  jumpForce: 6
+  jumpForce: 5
   onGroud: 0
   Ground:
     serializedVersion: 2
