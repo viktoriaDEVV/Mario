@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
     private float leftEdge;
     private float rightEdge;
 
+    public int health;
+
     private void Awake()
     {
         leftEdge = transform.position.x - moveDistance;
@@ -20,7 +22,33 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        
+        if (movingLeft)
+        {
+            if (transform.position.x>leftEdge)
+            {
+                transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                movingLeft = false;
+            }
+        }
+        else
+        {
+            if (transform.position.x < rightEdge)
+            {
+                transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                movingLeft = true;
+            }
+        }
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,6 +56,10 @@ public class Enemy : MonoBehaviour
         if(collision.tag == "Player")
         {
             collision.GetComponent<Health>().TakeDamage(damage);
+        }
+        if (collision.CompareTag("Bullet"))
+        {
+            health -= 1;
         }
     }
 }
