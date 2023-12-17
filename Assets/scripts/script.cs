@@ -50,13 +50,14 @@ public class script : MonoBehaviour
 
         
     }
-    /*void Flip()
+    void Flip()
     {
-        flipRight = !flipRight;
+        transform.Rotate(0, 180, 0);
+        /*flipRight = !flipRight;
         Vector3 theScale = transform.localScale;
         theScale.x = theScale.x * (-1);
-        transform.localScale = theScale;
-    } */
+        transform.localScale = theScale;*/
+    } 
 
     void Jump()
     {
@@ -80,6 +81,21 @@ public class script : MonoBehaviour
         }else if(collision.tag == "checkpoint")
         {
             respawnPoint = transform.position;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Equals("Platforma"))
+        {
+            this.transform.parent = collision.transform;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Equals("Platforma"))
+        {
+            this.transform.parent = null;
         }
     }
 }
